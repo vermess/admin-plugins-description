@@ -20,7 +20,8 @@
  * @subpackage Admin_Plugins_Description/admin
  * @author     Michał Robak <hello@michalrobak.pl>
  */
-class Admin_Plugins_Description_Admin {
+class Admin_Plugins_Description_Admin
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Admin_Plugins_Description_Admin {
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Admin_Plugins_Description_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,8 +75,7 @@ class Admin_Plugins_Description_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin-plugins-description-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/admin-plugins-description-admin.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Admin_Plugins_Description_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -96,8 +98,13 @@ class Admin_Plugins_Description_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin-plugins-description-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/admin-plugins-description-admin.js', array('jquery'), $this->version, false);
 	}
 
+	public function add_description_link($links, $file)
+	{
+		$links[] = '<a style="color: orange;" href="javascript:void(0)"><span class="dashicons dashicons-visibility"></span> ' . __('Show description', 'admin-plugins-description') . '</a>';
+		// $links[] = '<a style="color: orange;" href="javascript:void(0)"><span class="dashicons dashicons-hidden"></span></span> ' . __('Show description') . '</a>';
+		return $links;
+	}
 }
