@@ -2,3 +2,16 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ .apd-form.hidden{
+    display: none;
+ }
+
+ .apd-link{
+    color: #ffa500;
+ }
+
+ .apd-textarea{
+    width: 100%;
+    min-height: 100px;
+ }

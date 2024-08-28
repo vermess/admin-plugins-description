@@ -101,9 +101,19 @@ class Admin_Plugins_Description_Admin
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/admin-plugins-description-admin.js', array('jquery'), $this->version, false);
 	}
 
+	public function add_description_form($plugin_file, $plugin_data)
+	{
+		echo '<div class="apd-form hidden">';
+		echo '<textarea type="textarea" class="apd-textarea" data-plugin="' . sanitize_title($plugin_data['Name']) . '" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '"></textarea>';
+		echo '<button type="button" class="apd-button button button-primary">' . __('Save', 'admin-plugins-description') . '</button>';
+		echo '</div>';
+	}
+
 	public function add_description_link($links, $file)
 	{
-		$links[] = '<a style="color: orange;" href="javascript:void(0)"><span class="dashicons dashicons-visibility"></span> ' . __('Show description', 'admin-plugins-description') . '</a>';
+		$plugin_path = WP_PLUGIN_DIR . '/' . $file;
+		$plugin_data = get_plugin_data($plugin_path);
+		$links[] = '<a class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '" href="#"><span class="dashicons dashicons-visibility"></span> ' . __('Show description', 'admin-plugins-description') . '</a>';
 		// $links[] = '<a style="color: orange;" href="javascript:void(0)"><span class="dashicons dashicons-hidden"></span></span> ' . __('Show description') . '</a>';
 		return $links;
 	}

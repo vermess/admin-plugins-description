@@ -158,6 +158,7 @@ class Admin_Plugins_Description
 
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+		$this->loader->add_filter('after_plugin_row_meta', $plugin_admin, 'add_description_form', 9999, 2);
 		$this->loader->add_filter('plugin_row_meta', $plugin_admin, 'add_description_link', 9999, 2);
 	}
 
