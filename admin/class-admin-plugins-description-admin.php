@@ -113,8 +113,7 @@ class Admin_Plugins_Description_Admin
 	{
 		$plugin_path = WP_PLUGIN_DIR . '/' . $file;
 		$plugin_data = get_plugin_data($plugin_path);
-		$links[] = '<a class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '" href="#"><span class="dashicons dashicons-visibility"></span> ' . __('Show description', 'admin-plugins-description') . '</a>';
-		// $links[] = '<a style="color: orange;" href="javascript:void(0)"><span class="dashicons dashicons-hidden"></span></span> ' . __('Show description') . '</a>';
+		$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '" href="#"><span class="dashicons dashicons-edit"></span> ' . __('Add description', 'admin-plugins-description') . '</span>';
 		return $links;
 	}
 }

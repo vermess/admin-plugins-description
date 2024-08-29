@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	/**
@@ -29,4 +29,13 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-})( jQuery );
+	$(window).load(function () {
+		$('.apd-link').on('click', function () {
+			$(this).closest('.column-description').find('.apd-form').toggleClass('hidden');
+		});
+		$('.apd-button').on('click', function () {
+			console.log('Save button clicked');
+		});
+	});
+
+})(jQuery);
