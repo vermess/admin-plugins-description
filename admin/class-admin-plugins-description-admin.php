@@ -107,12 +107,13 @@ class Admin_Plugins_Description_Admin
 		$description = $this->get_plugin_description(sanitize_title($plugin_data['Name']));
 		$is_description = !empty($description);
 
-		if ($is_description) {
-			echo '<div class="apd-description">' . $description . '</div>';
-		}
+		echo '<div class="apd-description">' . $description . '</div>';
 		echo '<div class="apd-form hidden">';
 		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '">' . $description . '</textarea>';
+		echo '<div class="apd-buttons-container">';
 		echo '<button data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-button button button-primary">' . __('Save plugin description', 'admin-plugins-description') . '</button>';
+		echo '<a data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-delete-button">' . __('Delete description', 'admin-plugins-description') . '</a>';
+		echo '</div>';
 		echo '</div>';
 	}
 
@@ -149,6 +150,24 @@ class Admin_Plugins_Description_Admin
 				'plugin' => $plugin,
 			));
 		}
+	}
+
+	public function handle_remove_description()
+	{
+		check_ajax_referer('apd-nonce', 'nonce');
+
+		$descriptions = get_option('apd-descriptions', array());
+		if (empty($descriptions)) {
+			wp_send_json_error(__('There is no descriptions', 'admin-plugins-description'));
+		}
+
+		$plugin = sanitize_text_field($_POST['plugin']);
+		unset($descriptions[$plugin]);
+
+		update_option('apd-descriptions', $descriptions, false);
+		wp_send_json_success(array(
+			'plugin' => $plugin,
+		));
 	}
 
 	private function get_plugin_description($plugin)

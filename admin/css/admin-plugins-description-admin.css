@@ -3,22 +3,38 @@
  * included in this file.
  */
 
- .apd-form.hidden{
-    display: none;
- }
+.apd-form.hidden {
+  display: none;
+}
 
- .apd-link{
-    color: #ffa500;
-    cursor: pointer;
- }
+.apd-link {
+  color: #ffa500;
+  cursor: pointer;
+}
 
- .apd-textarea{
-    width: 100%;
-    min-height: 100px;
- }
+.apd-textarea {
+  width: 100%;
+  min-height: 100px;
+}
 
- .apd-description{
-   color: #ffa500;
-   /* border: 1px solid #ffa500;
-   padding: 10px; */
- }
+.apd-description {
+  color: #ffa500;
+}
+
+.apd-buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.apd-delete-button {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  color: #d63638;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.apd-delete-button:hover {
+  color: #d63638;
+}

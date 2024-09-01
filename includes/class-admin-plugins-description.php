@@ -161,6 +161,7 @@ class Admin_Plugins_Description
 		$this->loader->add_filter('after_plugin_row_meta', $plugin_admin, 'add_description_form', 9999, 2);
 		$this->loader->add_filter('plugin_row_meta', $plugin_admin, 'add_description_link', 9999, 2);
 		$this->loader->add_action('wp_ajax_send_ajax_request', $plugin_admin, 'handle_ajax_request');
+		$this->loader->add_action('wp_ajax_remove_description', $plugin_admin, 'handle_remove_description');
 	}
 
 	/**
