@@ -33,8 +33,27 @@
 		$('.apd-link').on('click', function () {
 			$(this).closest('.column-description').find('.apd-form').toggleClass('hidden');
 		});
-		$('.apd-button').on('click', function () {
-			console.log('Save button clicked');
+
+		$(".apd-button").on("click", function () {
+			const description = $(this).closest('.apd-form').find('.apd-textarea');
+
+			$.ajax({
+
+				url: adminPluginsDesription.ajaxurl,
+				type: "POST",
+				data: {
+					action: "send_ajax_request",
+					nonce: adminPluginsDesription.nonce,
+					plugin: $(this).data("plugin"),
+					description: description.val(),
+				},
+				success: function (response) {
+					console.log('Success');
+				},
+				error: function (response) {
+					console.log("AJAX Error: " + response.data);
+				},
+			});
 		});
 	});
 

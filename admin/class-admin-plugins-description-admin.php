@@ -99,13 +99,14 @@ class Admin_Plugins_Description_Admin
 		 */
 
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/admin-plugins-description-admin.js', array('jquery'), $this->version, false);
+		wp_localize_script($this->plugin_name, 'adminPluginsDesription', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('apd-nonce')));
 	}
 
 	public function add_description_form($plugin_file, $plugin_data)
 	{
 		echo '<div class="apd-form hidden">';
-		echo '<textarea type="textarea" class="apd-textarea" data-plugin="' . sanitize_title($plugin_data['Name']) . '" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '"></textarea>';
-		echo '<button type="button" class="apd-button button button-primary">' . __('Save', 'admin-plugins-description') . '</button>';
+		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '"></textarea>';
+		echo '<button data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-button button button-primary">' . __('Save', 'admin-plugins-description') . '</button>';
 		echo '</div>';
 	}
 
@@ -115,5 +116,24 @@ class Admin_Plugins_Description_Admin
 		$plugin_data = get_plugin_data($plugin_path);
 		$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '" href="#"><span class="dashicons dashicons-edit"></span> ' . __('Add description', 'admin-plugins-description') . '</span>';
 		return $links;
+	}
+
+	public function handle_ajax_request()
+	{
+		check_ajax_referer('apd-nonce', 'nonce');
+
+		$descriptions = get_option('apd-descriptions', array());
+		empty($descriptions) ? $descriptions = array() : $descriptions;
+
+		$description = sanitize_text_field($_POST['description']);
+		$plugin = sanitize_text_field($_POST['plugin']);
+
+		if (empty($description)) {
+			wp_send_json_error(__('Description cannot be empty', 'admin-plugins-description'));
+		} else {
+			$descriptions[$plugin] = $description;
+			update_option('apd-descriptions', $descriptions, false);
+			wp_send_json_success(__('Description added: ' . $description, 'admin-plugins-description'));
+		}
 	}
 }
