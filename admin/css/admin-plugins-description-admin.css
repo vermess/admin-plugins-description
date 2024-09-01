@@ -16,3 +16,9 @@
     width: 100%;
     min-height: 100px;
  }
+
+ .apd-description{
+   color: #ffa500;
+   /* border: 1px solid #ffa500;
+   padding: 10px; */
+ }

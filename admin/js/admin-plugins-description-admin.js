@@ -49,6 +49,8 @@
 				},
 				success: function (response) {
 					console.log('Success');
+					$('.apd-button[data-plugin="' + response.data.plugin + '"]').closest('.apd-form').addClass('hidden');
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-description').text(response.data.description);
 				},
 				error: function (response) {
 					console.log("AJAX Error: " + response.data);

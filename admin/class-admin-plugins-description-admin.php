@@ -104,9 +104,15 @@ class Admin_Plugins_Description_Admin
 
 	public function add_description_form($plugin_file, $plugin_data)
 	{
+		$description = $this->get_plugin_description(sanitize_title($plugin_data['Name']));
+		$is_description = !empty($description);
+
+		if ($is_description) {
+			echo '<div class="apd-description">' . $description . '</div>';
+		}
 		echo '<div class="apd-form hidden">';
-		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '"></textarea>';
-		echo '<button data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-button button button-primary">' . __('Save', 'admin-plugins-description') . '</button>';
+		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '">' . $description . '</textarea>';
+		echo '<button data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-button button button-primary">' . __('Save plugin description', 'admin-plugins-description') . '</button>';
 		echo '</div>';
 	}
 
@@ -114,7 +120,12 @@ class Admin_Plugins_Description_Admin
 	{
 		$plugin_path = WP_PLUGIN_DIR . '/' . $file;
 		$plugin_data = get_plugin_data($plugin_path);
-		$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '" href="#"><span class="dashicons dashicons-edit"></span> ' . __('Add description', 'admin-plugins-description') . '</span>';
+
+		if ($this->get_plugin_description(sanitize_title($plugin_data['Name']))) {
+			$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '"><span class="dashicons dashicons-edit"></span> ' . __('Edit description', 'admin-plugins-description') . '</span>';
+		} else {
+			$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '"><span class="dashicons dashicons-edit"></span> ' . __('Add description', 'admin-plugins-description') . '</span>';
+		}
 		return $links;
 	}
 
@@ -133,7 +144,16 @@ class Admin_Plugins_Description_Admin
 		} else {
 			$descriptions[$plugin] = $description;
 			update_option('apd-descriptions', $descriptions, false);
-			wp_send_json_success(__('Description added: ' . $description, 'admin-plugins-description'));
+			wp_send_json_success(array(
+				'description' => $description,
+				'plugin' => $plugin,
+			));
 		}
+	}
+
+	private function get_plugin_description($plugin)
+	{
+		$descriptions = get_option('apd-descriptions', array());
+		return isset($descriptions[$plugin]) ? $descriptions[$plugin] : '';
 	}
 }
