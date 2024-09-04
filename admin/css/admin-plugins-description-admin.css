@@ -10,6 +10,7 @@
 .apd-link {
   color: #ffa500;
   cursor: pointer;
+  display: none;
 }
 
 .apd-textarea {

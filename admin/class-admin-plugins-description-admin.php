@@ -105,8 +105,6 @@ class Admin_Plugins_Description_Admin
 	public function add_description_form($plugin_file, $plugin_data)
 	{
 		$description = $this->get_plugin_description(sanitize_title($plugin_data['Name']));
-		$is_description = !empty($description);
-
 		echo '<div class="apd-description">' . $description . '</div>';
 		echo '<div class="apd-form hidden">';
 		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '">' . $description . '</textarea>';
@@ -121,12 +119,11 @@ class Admin_Plugins_Description_Admin
 	{
 		$plugin_path = WP_PLUGIN_DIR . '/' . $file;
 		$plugin_data = get_plugin_data($plugin_path);
-
-		if ($this->get_plugin_description(sanitize_title($plugin_data['Name']))) {
-			$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '"><span class="dashicons dashicons-edit"></span> ' . __('Edit description', 'admin-plugins-description') . '</span>';
-		} else {
-			$links[] = '<span class="apd-link" data-plugin="' . sanitize_title($plugin_data['Name']) . '"><span class="dashicons dashicons-edit"></span> ' . __('Add description', 'admin-plugins-description') . '</span>';
-		}
+		$plugin_name = sanitize_title($plugin_data['Name']);
+		$icon = '<span class="dashicons dashicons-edit"></span>';
+		$link_add  = '<span class="apd-link add" data-plugin="' . $plugin_name . '">' . $icon . __('Add description', 'admin-plugins-description') . '</span>';
+		$link_edit = '<span class="apd-link edit" data-plugin="' . $plugin_name . '">' . $icon . __('Edit description', 'admin-plugins-description') . '</span>';
+		$links[] = $link_add . $link_edit;
 		return $links;
 	}
 

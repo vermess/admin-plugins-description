@@ -30,8 +30,15 @@
 	 */
 
 	$(window).load(function () {
-
-		$('.apd-delete-button').hide();
+		$('.apd-link').each(function () {
+			if ($(this).closest('.column-description').find('.apd-description').text().length > 0) {
+				$(this).closest('.column-description').find('.apd-link.edit').show();
+				$(this).closest('.column-description').find('.apd-delete-button').show();
+			} else {
+				$(this).closest('.column-description').find('.apd-link.add').show();
+				$(this).closest('.column-description').find('.apd-delete-button').hide();
+			}
+		});
 
 		$('.apd-link').on('click', function () {
 			$(this).closest('.column-description').find('.apd-form').toggleClass('hidden');
@@ -53,11 +60,11 @@
 					description: description.val(),
 				},
 				success: function (response) {
-					console.log('Success');
 					$('.apd-button[data-plugin="' + response.data.plugin + '"]').closest('.apd-form').addClass('hidden');
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-description').text(response.data.description).show();
-					$('.apd-link[data-plugin="' + response.data.plugin + '"]').html('<span class="dashicons dashicons-edit"></span> Edit description');
-					$('.apd-delete-button').show();
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-delete-button').show();
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-link.edit').show();
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-link.add').hide();
 				},
 				error: function (response) {
 					console.log("AJAX Error: " + response.data);
@@ -76,12 +83,12 @@
 					plugin: $(this).data("plugin"),
 				},
 				success: function (response) {
-					console.log('Success');
 					$('.apd-button[data-plugin="' + response.data.plugin + '"]').closest('.apd-form').addClass('hidden');
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-description').hide();
-					$('.apd-link[data-plugin="' + response.data.plugin + '"]').html('<span class="dashicons dashicons-edit"></span> Add description');
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-delete-button').hide();
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-textarea').val('');
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-link.add').show();
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-link.edit').hide();
 				},
 				error: function (response) {
 					console.log("AJAX Error: " + response.data);
