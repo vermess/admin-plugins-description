@@ -104,13 +104,13 @@ class Admin_Plugins_Description_Admin
 
 	public function add_description_form($plugin_file, $plugin_data)
 	{
-		$description = $this->get_plugin_description(sanitize_title($plugin_data['Name']));
-		echo '<div class="apd-description">' . $description . '</div>';
+		$description = $this->get_plugin_description($plugin_data['Name']);
+		echo '<div class="apd-description">' . esc_html($description) . '</div>';
 		echo '<div class="apd-form hidden">';
-		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . __('Add custom description...', 'admin-plugins-description') . '">' . $description . '</textarea>';
+		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . esc_attr__('Add custom description...', 'admin-plugins-description') . '">' . esc_textarea($description) . '</textarea>';
 		echo '<div class="apd-buttons-container">';
-		echo '<button data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-button button button-primary">' . __('Save plugin description', 'admin-plugins-description') . '</button>';
-		echo '<a data-plugin="' . sanitize_title($plugin_data['Name']) . '" type="button" class="apd-delete-button">' . __('Delete description', 'admin-plugins-description') . '</a>';
+		echo '<button data-plugin="' . esc_attr(sanitize_title($plugin_data['Name'])) . '" type="button" class="apd-button button button-primary">' . esc_html__('Save plugin description', 'admin-plugins-description') . '</button>';
+		echo '<a data-plugin="' . esc_attr(sanitize_title($plugin_data['Name'])) . '" type="button" class="apd-delete-button">' . esc_html__('Delete description', 'admin-plugins-description') . '</a>';
 		echo '</div>';
 		echo '</div>';
 	}
@@ -134,8 +134,16 @@ class Admin_Plugins_Description_Admin
 		$descriptions = get_option('apd-descriptions', array());
 		empty($descriptions) ? $descriptions = array() : $descriptions;
 
-		$description = sanitize_text_field($_POST['description']);
-		$plugin = sanitize_text_field($_POST['plugin']);
+		if (isset($_POST['description']) && !empty($_POST['description'])) {
+			$description = sanitize_text_field(wp_unslash($_POST['description']));
+		} else {
+			wp_send_json_error(__('Description cannot be empty', 'admin-plugins-description'));
+		}
+		if (isset($_POST['plugin'])) {
+			$plugin = sanitize_text_field(wp_unslash($_POST['plugin']));
+		} else {
+			wp_send_json_error(__('Plugin identifier is missing', 'admin-plugins-description'));
+		}
 
 		if (empty($description)) {
 			wp_send_json_error(__('Description cannot be empty', 'admin-plugins-description'));
@@ -158,7 +166,11 @@ class Admin_Plugins_Description_Admin
 			wp_send_json_error(__('There is no descriptions', 'admin-plugins-description'));
 		}
 
-		$plugin = sanitize_text_field($_POST['plugin']);
+		if (isset($_POST['plugin'])) {
+			$plugin = sanitize_text_field(wp_unslash($_POST['plugin']));
+		} else {
+			wp_send_json_error(__('Plugin identifier is missing', 'admin-plugins-description'));
+		}
 		unset($descriptions[$plugin]);
 
 		update_option('apd-descriptions', $descriptions, false);

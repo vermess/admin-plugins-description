@@ -20,7 +20,8 @@
  * @subpackage Admin_Plugins_Description/public
  * @author     Michał Robak <hello@michalrobak.pl>
  */
-class Admin_Plugins_Description_Public {
+class Admin_Plugins_Description_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Admin_Plugins_Description_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Admin_Plugins_Description_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -72,9 +74,9 @@ class Admin_Plugins_Description_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin-plugins-description-public.css', array(), $this->version, 'all' );
-
+		if (isset($_GET['page']) && $_GET['page'] === 'plugins') {
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/admin-plugins-description-public.css', array(), $this->version, 'all');
+		}
 	}
 
 	/**
@@ -82,7 +84,8 @@ class Admin_Plugins_Description_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -95,9 +98,8 @@ class Admin_Plugins_Description_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin-plugins-description-public.js', array( 'jquery' ), $this->version, false );
-
+		if (isset($_GET['page']) && $_GET['page'] === 'plugins') {
+			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/admin-plugins-description-public.js', array('jquery'), $this->version, false);
+		}
 	}
-
 }
