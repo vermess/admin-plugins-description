@@ -8,9 +8,15 @@
 }
 
 .apd-link {
-  color: #ffa500;
+  color: #000;
   cursor: pointer;
   display: none;
+}
+.apd-link .dashicons {
+  font-size: 14px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .apd-textarea {
@@ -19,7 +25,7 @@
 }
 
 .apd-description {
-  color: #ffa500;
+  color: #000;
 }
 
 .apd-buttons-container {
