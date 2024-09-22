@@ -104,7 +104,7 @@ class Admin_Plugins_Description_Admin
 
 	public function add_description_form($plugin_file, $plugin_data)
 	{
-		$description = $this->get_plugin_description($plugin_data['Name']);
+		$description = $this->get_plugin_description(sanitize_title($plugin_data['Name']));
 		echo '<div class="apd-description">' . esc_html($description) . '</div>';
 		echo '<div class="apd-form hidden">';
 		echo '<textarea type="textarea" class="apd-textarea" placeholder="' . esc_attr__('Add custom description...', 'admin-plugins-description') . '">' . esc_textarea($description) . '</textarea>';
