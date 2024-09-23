@@ -86,7 +86,7 @@
 					$('.apd-button[data-plugin="' + response.data.plugin + '"]').closest('.apd-form').addClass('hidden');
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-description').hide();
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-delete-button').hide();
-					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-textarea').val('');
+					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-textarea').val('').text('');
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-link.add').show();
 					$('.apd-link[data-plugin="' + response.data.plugin + '"]').closest('.column-description').find('.apd-link.edit').hide();
 				},
