@@ -75,7 +75,13 @@ class Admin_Plugins_Description_Admin
 		 * class.
 		 */
 
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/admin-plugins-description-admin.css', array(), $this->version, 'all');
+		$asset_file = include_once(plugin_dir_path(__FILE__) . '../build/index.asset.php');
+		wp_enqueue_style(
+			$this->plugin_name . '-styles',
+			plugins_url('../build/index.css', __FILE__),
+			array(),
+			$asset_file['version']
+		);
 	}
 
 	/**
@@ -98,8 +104,15 @@ class Admin_Plugins_Description_Admin
 		 * class.
 		 */
 
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/admin-plugins-description-admin.js', array('jquery'), $this->version, false);
-		wp_localize_script($this->plugin_name, 'adminPluginsDesription', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('apd-nonce')));
+		$asset_file = include(plugin_dir_path(__FILE__) . '../build/index.asset.php');
+		wp_enqueue_script(
+			$this->plugin_name . '-scripts',
+			plugins_url('../build/index.js', __FILE__),
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
+		wp_localize_script($this->plugin_name . '-scripts', 'adminPluginsDesription', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('apd-nonce')));
 	}
 
 	public function add_description_form($plugin_file, $plugin_data)
