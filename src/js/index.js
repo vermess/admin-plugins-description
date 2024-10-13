@@ -1,8 +1,5 @@
 import { __ } from '@wordpress/i18n';
-
 import '../scss/index.scss';
-
-console.log(__('Hello, world!!! 🌍', 'admin-plugins-description'));
 
 (function ($) {
     'use strict';

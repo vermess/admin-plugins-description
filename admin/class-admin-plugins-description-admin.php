@@ -75,10 +75,10 @@ class Admin_Plugins_Description_Admin
 		 * class.
 		 */
 
-		$asset_file = include_once(plugin_dir_path(__FILE__) . '../build/index.asset.php');
+		$asset_file = include(plugin_dir_path(__FILE__) . '../assets/apd.asset.php');
 		wp_enqueue_style(
 			$this->plugin_name . '-styles',
-			plugins_url('../build/index.css', __FILE__),
+			plugins_url('../assets/apd.css', __FILE__),
 			array(),
 			$asset_file['version']
 		);
@@ -104,10 +104,10 @@ class Admin_Plugins_Description_Admin
 		 * class.
 		 */
 
-		$asset_file = include(plugin_dir_path(__FILE__) . '../build/index.asset.php');
+		$asset_file = include(plugin_dir_path(__FILE__) . '../assets/apd.asset.php');
 		wp_enqueue_script(
 			$this->plugin_name . '-scripts',
-			plugins_url('../build/index.js', __FILE__),
+			plugins_url('../assets/apd.js', __FILE__),
 			$asset_file['dependencies'],
 			$asset_file['version'],
 			true
